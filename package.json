@@ -1,0 +1,25 @@
+{
+  "name": "areana.iot.lambda",
+  "version": "1.0.0",
+  "description": "Areana IoT Smart Home Alexa Skill Lambda function",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satishsonker/Areana.IoT.Lambda.git"
+  },
+  "keywords": [
+    "Alexa",
+    "Smart",
+    "home",
+    "skill"
+  ],
+  "author": "Satish Kumar Sonkar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satishsonker/Areana.IoT.Lambda/issues"
+  },
+  "homepage": "https://github.com/satishsonker/Areana.IoT.Lambda#readme"
+}
