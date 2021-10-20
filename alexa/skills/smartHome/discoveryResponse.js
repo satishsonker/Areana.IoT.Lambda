@@ -1,15 +1,21 @@
 let AlexaResponse = require("./alexaResponse");
 let ErrorResponse = require("./errorResponse");
+let Dynamo=require('../../../dynamo');
 const https = require('https');
 let config = require("../../../config.json");
 'use strict';
 class DiscoveryrResponse {
+    constructor()
+    {
+        this.db=new Dynamo();
+    }
     async getResponse() {
         const devices = await this.getDeviceForDiscovery();
         if (devices?.length > 0) {
             let adr = new AlexaResponse({ "namespace": "Alexa.Discovery", "name": "Discover.Response" });
             let capability_alexa_various = adr.createPayloadEndpointCapability();
             devices.forEach((device, ind) => {
+                this.db.addNewDevice(device.deviceKey);
                 let capability_alexa = [];
                 capability_alexa.push(capability_alexa_various);
                 device["deviceType"]["deviceCapabilities"].forEach((deviceCap, indCap) => {
