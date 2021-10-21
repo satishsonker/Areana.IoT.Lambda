@@ -10,15 +10,50 @@ class DynamoDB {
     };
 
     async updateDeviceState(endpointId, powerState) {
-          let docClient = new AWS.DynamoDB.DocumentClient();
+        let docClient = new AWS.DynamoDB.DocumentClient();
         AWS.config.update(this.awsConfig);
         var params = {
             TableName: config.dbTableName,
             Key: { "endpointId": endpointId },
             UpdateExpression: "set powerState =:powerState,updated_on=:updated_on",
             ExpressionAttributeValues: {
-                ':updated_on':new Date().toString(),
-                ':powerState':powerState
+                ':updated_on': new Date().toString(),
+                ':powerState': powerState
+            },
+            ReturnValues: "UPDATED_NEW"
+        };
+
+        const result = await docClient.update(params).promise();
+        return result.Items;
+    }
+    async updateDeviceBrightness(endpointId, brightness) {
+        let docClient = new AWS.DynamoDB.DocumentClient();
+        AWS.config.update(this.awsConfig);
+        var params = {
+            TableName: config.dbTableName,
+            Key: { "endpointId": endpointId },
+            UpdateExpression: "set brightness =:brightness,updated_on=:updated_on",
+            ExpressionAttributeValues: {
+                ':updated_on': new Date().toString(),
+                ':brightness': brightness
+            },
+            ReturnValues: "UPDATED_NEW"
+        };
+
+        const result = await docClient.update(params).promise();
+        return result.Items;
+    }
+
+    async updateDeviceColor(endpointId, color) {
+        let docClient = new AWS.DynamoDB.DocumentClient();
+        AWS.config.update(this.awsConfig);
+        var params = {
+            TableName: config.dbTableName,
+            Key: { "endpointId": endpointId },
+            UpdateExpression: "set color =:color,updated_on=:updated_on",
+            ExpressionAttributeValues: {
+                ':updated_on': new Date().toString(),
+                ':color': color
             },
             ReturnValues: "UPDATED_NEW"
         };
@@ -43,26 +78,25 @@ class DynamoDB {
         const result = await docClient.query(params).promise();
         return result.Items;
     }
-    async addNewDevice(endpointId)
-    {
+    async addNewDevice(endpointId) {
         let docClient = new AWS.DynamoDB.DocumentClient();
         AWS.config.update(this.awsConfig);
         var input = {
-            "endpointId": endpointId, 
+            "endpointId": endpointId,
             "powerState": "OFF",
             "created_on": new Date().toString(),
             "updated_on": new Date().toString()
         };
         var params = {
             TableName: config.dbTableName || "AreanaIoTDb",
-            Item:  input
+            Item: input
         };
         docClient.put(params, function (err, data) {
-    
+
             if (err) {
-                console.log("users::save::error Db Put - " + JSON.stringify(err, null, 2));                      
+                console.log("users::save::error Db Put - " + JSON.stringify(err, null, 2));
             } else {
-                console.log("users::Db Put::success" );                      
+                console.log("users::Db Put::success");
             }
         });
     }

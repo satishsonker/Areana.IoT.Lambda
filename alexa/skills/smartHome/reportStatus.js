@@ -23,11 +23,16 @@ class ReportStateResponse {
         );
         ar.addContextProperty(this.common.endpointHealthContext);
         let powerContext=this.common.powerControllerContext;
-        console.log('retrieve data from dynamo');
+        let brightnessContext=this.common.brightnessControllerContext;
+        let colorContext=this.common.colorControllerContext;
         let data=await this.db.getDeviceState(endpoint_id);
-        console.log(data);
         powerContext.value=data[0].powerState;
+        brightnessContext.value=data[0].brightness;
+        colorContext.value=data[0].color;
+        ar.addContextProperty(brightnessContext);
         ar.addContextProperty(powerContext);
+        ar.addContextProperty(colorContext);
+        console.log('Status Report');
         console.log(JSON.stringify(ar.get()));
         return ar.get();
     }
