@@ -24,7 +24,7 @@ class DynamoDB {
         };
 
         const result = await docClient.update(params).promise();
-        return result.Items;
+        return true;
     }
     async updateDeviceBrightness(endpointId, brightness) {
         let docClient = new AWS.DynamoDB.DocumentClient();

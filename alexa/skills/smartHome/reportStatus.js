@@ -29,10 +29,13 @@ class ReportStateResponse {
         powerContext.value=data[0].powerState;
         brightnessContext.value=data[0].brightness;
         colorContext.value=data[0].color;
+        if(typeof brightnessContext.value==="string")
         ar.addContextProperty(brightnessContext);
         ar.addContextProperty(powerContext);
+         if(typeof colorContext.value==="string")
         ar.addContextProperty(colorContext);
         console.log('Status Report');
+        console.log(data[0]);
         console.log(JSON.stringify(ar.get()));
         return ar.get();
     }
