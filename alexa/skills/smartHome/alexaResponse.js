@@ -112,6 +112,10 @@ class AlexaResponse {
             capability['properties']['proactivelyReported'] = this.checkValue(opts.proactivelyReported, true);
             capability['properties']['retrievable'] = this.checkValue(opts.retrievable, true);
         }
+        if(opts.proactivelyReported!==undefined)
+        {
+            capability['proactivelyReported'] = this.checkValue(opts.proactivelyReported, true);
+        }
         return capability
     }
     get() {
